@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-// import { navigate } from 'expo-router/build/global-state/routing'; // Unused import, you can remove it
+import { NavigationContainer } from '@react-navigation/native';
+import { useRouter } from 'expo-router'
+
+
+
+
 
 const Index = () => {
+   const router = useRouter()
   const [screen, setScreen] = useState<'home' | 'settings' | 'gallery'>('home');
   const [isVisible, setVisible] = useState(false);
   const [showAppearance, setShowAppearance] = useState(false);
@@ -34,127 +40,18 @@ const Index = () => {
   return (
     <View style={styles.container}>
       {/* Show title and settings button ONLY if settings and appearance are NOT visible */}
-      {!isVisible && !showAppearance && !showAppearances && !showTools && (
+
         <>
           <Text style={styles.appName}>EditX</Text>
-          <TouchableOpacity style={styles.btnSettings} onPress={() => {
-            setVisible(true);
-            setShowAppearance(false);
-            setShowAppearances(false);
-            setShowTools(false);
-          }}>
+          <TouchableOpacity style={styles.btnSettings}  onPress={() => router.push('/Settings')}>
             <Image
               source={require('../assets/images/settings2.png')}
               style={{ width: 30, height: 30 }}
             />
           </TouchableOpacity>
         </>
-      )}
+    
 
-      {/* Settings view (hidden if Appearance or Appearances or Tools view is visible) */}
-      {isVisible && !showAppearance && !showAppearances && !showTools && (
-        <View style={styles.settingsView}>
-          <Text style={styles.settings}>Settings</Text>
-
-          <TouchableOpacity onPress={() => setVisible(false)} style={styles.btn}>
-            <Image
-              source={require('../assets/images/left-arrow.png')}
-              style={{ width: 20, height: 20, tintColor: 'white' }}
-            />
-          </TouchableOpacity>
-
-          <View style={styles.sView}>
-            <Text style={styles.settingsText}>Appearance</Text>
-            <TouchableOpacity
-              style={styles.btnset}
-              onPress={() => {
-                setShowAppearance(true);
-                setVisible(false);
-                setShowAppearances(false);
-                setShowTools(false);
-              }}
-            >
-              <Image
-                source={require('../assets/images/back.png')}
-                style={{ width: 15, height: 15, tintColor: 'white' }}
-              />
-            </TouchableOpacity>
-
-            <Text style={styles.settingsText}>Tools Preferences</Text>
-            <TouchableOpacity
-              style={styles.btnset}
-              onPress={() => {
-                setShowAppearances(true);
-                setVisible(false);
-                setShowAppearance(false);
-                setShowTools(false);
-              }}
-            >
-              <Image
-                source={require('../assets/images/back.png')}
-                style={{ width: 15, height: 15, tintColor: 'white' }}
-              />
-            </TouchableOpacity>
-
-            <Text style={styles.settingsText}>Storage & Cache</Text>
-            <TouchableOpacity style={styles.btnset}>
-              <Image
-                source={require('../assets/images/back.png')}
-                style={{ width: 15, height: 15, tintColor: 'white' }}
-              />
-            </TouchableOpacity>
-
-            <Text style={styles.settingsText}>Image Quality & Format</Text>
-            <TouchableOpacity style={styles.btnset}>
-              <Image
-                source={require('../assets/images/back.png')}
-                style={{ width: 15, height: 15, tintColor: 'white' }}
-              />
-            </TouchableOpacity>
-
-            <Text style={styles.settingsText}>Accessibility</Text>
-            <TouchableOpacity style={styles.btnset}>
-              <Image
-                source={require('../assets/images/back.png')}
-                style={{ width: 15, height: 15, tintColor: 'white' }}
-              />
-            </TouchableOpacity>
-
-            <Text style={styles.settingsText}>About / Info</Text>
-            <TouchableOpacity style={styles.btnset}>
-              <Image
-                source={require('../assets/images/back.png')}
-                style={{ width: 15, height: 15, tintColor: 'white' }}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-      )}
-
-      {/* Appearance view with back button */}
-      {showAppearance && (
-        <View style={styles.appearanceView}>
-          <TouchableOpacity onPress={() => setShowAppearance(false)} style={{ marginLeft: 20, marginBottom: 10 }}>
-            <Text style={{ color: 'white', fontSize: 16 }}>{'< Back'}</Text>
-          </TouchableOpacity>
-          <Text style={styles.settings}>Appearance</Text>
-          {/* Your Appearance content here */}
-        </View>
-      )}
-
-      {/* Appearances view with back button */}
-      {showAppearances && (
-        <View style={styles.appearanceView}>
-          <TouchableOpacity onPress={() => setShowAppearances(false)} style={{ marginLeft: 20, marginBottom: 10 }}>
-            <Text style={{ color: 'white', fontSize: 16 }}>{'< Back'}</Text>
-          </TouchableOpacity>
-          <Text style={styles.settings}>Appearassnce</Text>
-          {/* Your Appearance content here */}
-        </View>
-      )}
-
-      {/* Main content view when settings & appearance are not visible */}
-      {!isVisible && !showAppearance && !showAppearances && !showTools && (
         <View style={styles.div}>
           <TouchableOpacity style={styles.card} onPress={openGallery}>
             {selectedImage ? (
@@ -178,7 +75,7 @@ const Index = () => {
 
           <View style={styles.card}></View>
         </View>
-      )}
+   
     </View>
   );
 };
@@ -189,7 +86,7 @@ export default Index;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'lightgray',
   },
   appName: {
     fontSize: 30,
@@ -250,10 +147,10 @@ const styles = StyleSheet.create({
   },
   settingsView: {
     flex: 1,
-    backgroundColor: '#695b5bff',
+    backgroundColor: 'lightgray',
   },
   settings: {
-    color: 'white',
+    color: 'blue',
     fontSize: 30,
     fontWeight: 'bold',
     marginTop: 30,
