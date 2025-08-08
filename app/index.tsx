@@ -65,13 +65,17 @@ const Index = () => {
             <Text style={styles.cardText}>Gallery</Text>
           </TouchableOpacity>
 
-          <View style={styles.card}>
-            <Image
-              source={require('../assets/images/download.png')}
-              style={styles.image}
-            />
+          <TouchableOpacity style={styles.card}onPress={() => router.push('/Templates')}>
+            {selectedImage ? (
+              <Image source={{ uri: selectedImage }} style={styles.gallery} />
+            ) : (
+              <Image
+                source={require('../assets/images/download.png')}
+                style={styles.gallery}
+              />
+            )}
             <Text style={styles.cardText}>Templates</Text>
-          </View>
+          </TouchableOpacity>
 
           <View style={styles.card}></View>
         </View>
